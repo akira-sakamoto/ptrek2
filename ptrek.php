@@ -1,3 +1,15 @@
+<?php
+	include_once("ptrek_main.php");
+
+	session_start();
+	if (!isset($_Session["PHPSESSID"])){
+		/* initialize */
+		Initialize();
+		SaveSession();
+	}else{
+	    LoadSession();
+	}
+?>
 <!doctype html>
 <html>
 <head>
@@ -22,41 +34,58 @@
 	else {
 		$cmd = 'ini';
 	}
-	echo "cmd = $cmd / dir = $dir / pow = $pow";
 
 	switch ($cmd) {
 		case 'nav':
-			# code...
+			PrintParagraph("NAV: $dir $pow");
 			break;
 
 		case 'srs':
+			PrintParagraph("SRS");
 			break;
 
 		case 'lrs':
+			PrintParagraph("LRS");
 			break;
 
 		case 'pha':
+			PrintParagraph("PHA: $pow");
 			break;
 
 		case 'tor':
+			PrintParagraph("TOR: $dir");
 			break;
 
 		case 'shi':
+			PrintParagraph("SHI: $pow");
 			break;
 
 		case 'dam':
+			PrintParagraph("DAM:");
+			DebugTest();
 			break;
 
 		case 'com':
+			PrintParagraph("COM: $pow");
+			DebugDump();
 			break;
 
-		case 'ini':
+		case 'xxx':
+			PrintParagraph("XXX:");
+			$_SESSION = array();
+
+			if (isset($_Session["PHPSESSID"])) {
+				setSession("PHPSESSID", '', time() - 1800, '/');
+			}
+
+			session_destroy();
 			break;
 	
 		default:
-			# code...
+			PrintParagraph("ERROR: $code");
 			break;
 	}
+
 
 ?>
 </body>
